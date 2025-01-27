@@ -1,4 +1,4 @@
-# Bot 
+# Bot Batttlr
 
 **Bot Battlr** is a React-based web application where users can view a collection of bots and build their own bot army. The app interacts with a backend API to fetch bot data and allows users to enlist, release, and discharge bots dynamically .
 
