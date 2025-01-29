@@ -10,7 +10,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   // Use environment variable for API URL
-  const apiUrl = import.meta.env.VITE_API_URL || "https://bots.onrender.com/bots";
+  
 
   // Fetch bots data when component mounts
   useEffect(() => {
@@ -67,7 +67,7 @@ function App() {
       setError(null);
     } catch (err) {
       setError('Error discharging bot. Please try again.');
-      console.error('Error discharging bot:', err);
+      
     }
   };
 
@@ -83,7 +83,7 @@ function App() {
   // Main render with error handling and components
   return (
     <div className="app-container">
-      <h1 className="header">Bot Battlr</h1>
+      
       
       {/* Show error message if there was an issue fetching data */}
       {error && (
