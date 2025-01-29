@@ -10,7 +10,7 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   // Use environment variable for API URL
-  const apiUrl = import.meta.env.VITE_API_URL || "https://bots-si0g.onrender.com/bots";
+  const apiUrl = import.meta.env.VITE_API_URL || "https://bots.onrender.com/bots";
 
   // Fetch bots data when component mounts
   useEffect(() => {
