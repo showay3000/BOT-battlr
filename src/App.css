@@ -1,127 +1,37 @@
-/* General Body */
-body {
-  background-color: #121212;
-  color: #E0E0E0;
-  font-family: 'Arial', sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-/* Header Styling */
-.header {
+.app {
   text-align: center;
-  font-size: 2.5rem;
-  font-weight: bold;
-  margin-bottom: 30px;
-  color: #FF8A00;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-
-/* Collection and Army Section */
-.bot-collection, .your-bot-army {
   padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  background-color: #1E1E1E;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-/* Bot Grid Layout */
-.bot-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 20px;
-  padding: 20px;
-  justify-items: center;
+.bot-collection,
+.your-bot-army {
+  margin: 20px;
 }
 
-/* Individual Bot Card */
-.bot-card {
-  border: 1px solid #333;
-  padding: 20px;
-  text-align: center;
-  background: #2C2C2C;
-  border-radius: 12px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-/* Bot Card Hover Effect */
-.bot-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-}
-
-/* Avatar Styling */
-.bot-avatar {
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  object-fit: cover;
-}
-
-/* Bot Class Styling */
-.bot-class {
-  color: #B0B0B0;
-  font-style: italic;
-  margin-top: 8px;
-  font-size: 1em;
-}
-
-/* Bot Stats Section */
-.bot-stats {
+.bot-list {
   display: flex;
-  justify-content: space-around;
-  margin-top: 12px;
-  font-size: 1em;
-  color: #B0B0B0;
-}
-
-/* Bot Actions Section */
-.bot-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 12px;
-}
-
-/* Button Styles */
-
-/* Release Button */
-.release-btn {
-  background: #FF8A00;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  padding: 10px 20px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s, transform 0.2s;
-}
-
-.release-btn:hover {
-  background: #FF6A00;
-  transform: scale(1.05);
-}
-
-/* Discharge Button */
-.discharge-btn {
-  background: #FF3B30;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 35px;
-  height: 35px;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
   justify-content: center;
-  transition: background-color 0.3s, transform 0.2s;
 }
 
-.discharge-btn:hover {
-  background: #FF1C1C;
-  transform: scale(1.1);
+.bot-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 10px;
+  width: 200px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.bot-card img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+button {
+  margin: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
 }

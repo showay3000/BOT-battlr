@@ -1,107 +1,76 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-import BotCollection from './components/BotCollection';
-import YourBotArmy from './components/YourBotArmy';
+import { useState, useEffect } from "react";
+import BotCollection from "./components/BotCollection";
+import YourBotArmy from "./components/YourBotArmy";
+import "./App.css";
 
 function App() {
-  const [bots, setBots] = useState([]);
-  const [army, setArmy] = useState([]);
-  const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [bots, setBots] = useState([]); // Store all bots
+  const [army, setArmy] = useState([]); // Store enlisted bots
+  const [loading, setLoading] = useState(true); // Loading state
+  const [error, setError] = useState(null); // Error state
 
-  // Use environment variable for API URL
-  
-
-  // Fetch bots data when component mounts
+  // Fetch bots from the server when the component mounts
   useEffect(() => {
     const fetchBots = async () => {
       try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        const response = await fetch("https://bots-si0g.onrender.com/bots");
+
+        if (!response.ok) throw new Error("Failed to fetch bots");
         const data = await response.json();
-        setBots(data);
-        setError(null);
+        setBots(data); // Save bots to state
       } catch (err) {
-        setError(`Error loading bots: ${err.message}. Please try again later.`);
-        console.error('Error fetching bots:', err);
+        setError("Error loading bots. Please try again later.");
+        console.error(err);
       } finally {
-        setLoading(false);
+        setLoading(false); // Stop loading
       }
     };
 
-    // Retry fetching after 5 seconds if there's an error
-    if (error) {
-      const retryTimeout = setTimeout(fetchBots, 5000);
-      return () => clearTimeout(retryTimeout);
-    }
-
     fetchBots();
-  }, [apiUrl, error]);
+  }, []);
 
-  // Enlist a bot to your army (only if it's not already in the army)
+  // Add a bot to the army if it's not already enlisted
   const enlistBot = (bot) => {
-    if (!army.find(b => b.id === bot.id)) {
-      setArmy([...army, bot]);
+    if (!army.some((b) => b.id === bot.id)) {
+      setArmy((prevArmy) => [...prevArmy, bot]);
     }
   };
 
-  // Release a bot from your army
+  // Remove a bot from the army
   const releaseBot = (bot) => {
-    setArmy(army.filter(b => b.id !== bot.id));
+    setArmy((prevArmy) => prevArmy.filter((b) => b.id !== bot.id));
   };
 
-  // Discharge a bot from both the army and backend
+  // Remove a bot completely from both the army and the server
   const dischargeBot = async (botId) => {
     try {
-      const response = await fetch(`${apiUrl}/${botId}`, {
-        method: 'DELETE'
+      const response = await fetch(`https://bots-si0g.onrender.com/bots/${botId}`, {
+        method: "DELETE",
       });
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      // Update state after successful discharge
-      setArmy(army.filter(b => b.id !== botId));
-      setBots(bots.filter(b => b.id !== botId));
-      setError(null);
+
+      if (!response.ok) throw new Error("Failed to discharge bot");
+
+      // Remove bot from the army and bot list
+      setArmy((prevArmy) => prevArmy.filter((b) => b.id !== botId));
+      setBots((prevBots) => prevBots.filter((b) => b.id !== botId));
     } catch (err) {
-      setError('Error discharging bot. Please try again.');
-      
+      setError("Error discharging bot. Please try again.");
+      console.error(err);
     }
   };
 
-  // Display loading message while fetching data
-  if (loading) {
-    return (
-      <div className="loading-container">
-        <p>Loading bots...</p>
-      </div>
-    );
-  }
+  // Show loading message while fetching data
+  if (loading) return <div>Loading bots...</div>;
+  // Show error message if there's an issue
+  if (error) return <div>{error}</div>;
 
-  // Main render with error handling and components
   return (
-    <div className="app-container">
-      
-      
-      {/* Show error message if there was an issue fetching data */}
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
-      
-      {/* Pass necessary props to YourBotArmy and BotCollection */}
-      <YourBotArmy 
-        army={army} 
-        onRelease={releaseBot}
-        onDischarge={dischargeBot}
-      />
-      <BotCollection 
-        bots={bots} 
-        onEnlist={enlistBot}
-      />
+    <div className="app">
+      <h1>Bot Battlr</h1>
+      {/* Display the enlisted bot army */}
+      <YourBotArmy army={army} onRelease={releaseBot} onDischarge={dischargeBot} />
+      {/* Display the list of available bots */}
+      <BotCollection bots={bots} onEnlist={enlistBot} />
     </div>
   );
 }
